@@ -68,7 +68,8 @@ class VT3Domains(VT3Base):
         """Retrieve related objects to an Internet domain.
         Args:
             domain(str): Domain name.
-            relationship(str): Relationship name (see table https://developers.virustotal.com/v3.0/reference#files).
+            
+            relationship(str): Relationship name (see table https://developers.virustotal.com/v3.0/reference#domains-relationships).
             limit(int, optional): Maximum number of comments to retrieve(default limit = 10).
             cursor(str, optional): Continuation cursor.
             timeout(float, optional): The amount of time per seconds, for the request to wait until the timeout expires.
