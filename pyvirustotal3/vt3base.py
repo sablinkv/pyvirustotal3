@@ -2,13 +2,21 @@ import requests
 from vt3exception import VT3Exception
 
 class VT3Base():
+    """A base class for subclasses VT3Files, VT3Urls, VT3Domains and VT3IPAddresses.
+        Attributes:
+            url(str): The URL for sending requests.
+            headers(dict): Request header containing API key.
+            proxies(dict): Protocol for mapping a dictionary to a proxy server URL.
+            version(int): Version of the VirusTotal API used.
+            json_format(bool): Request output format JSON(True) or byte sequence(Flase).
+    """
+
     def __init__(self, access_key, proxies=None, json_format=True):
         """
         Args:
+            access_key(str): Your API key to the VirusTotal service.
             proxies(dict, optional): Dictionary containing proxies.
-            json_format(bool, optional): Output format : 
-                                        - JSON(True);
-                                        - Byte sequence(False).
+            json_format(bool, optional): Request output format JSON(True) or byte sequence(Flase).
 
         Exceptions:
             Exception: Invalid API key.
