@@ -1,9 +1,9 @@
 import requests
 
 from vt3exception import VT3Exception
-from vt3base import VT3Base
+from vt3base import VT3Request
 
-class VT3Domains(VT3Base):
+class VT3Domains(VT3Request):
     """Class for the Domains endpoints"""
 
     def report(self, domain, timeout=None):
@@ -17,7 +17,7 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        return self._get(f'/domains/{domain}', timeout=timeout)
 
     def get_comments(self, domain, limit=10, cursor=None, timeout=None):
         """Retrieve comments for an Internet domain.
@@ -34,7 +34,7 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        return self._get(f'/domains/{domain}/comments', limit=str(limit), cursor=cursor, timeout=timeout)
 
     def add_commnets(self, domain, text, timeout=None):
         """Add a comment to an Internet domain.
@@ -50,7 +50,8 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        comment = {"data": {"type": "comment", "attributes": {"text": text}}}
+        return self._post(f'/domains/{domain}/comments', json=comment, timeout=timeout)
 
     @staticmethod
     def is_valid_relationship(relationship):
@@ -82,7 +83,11 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        relship = relationship.lower()
+        if not self.is_valid_relationship(relship):
+            raise ValueError('Invalid relationships value')
+
+        return self._get(f'/domains/{domain}/{relship}', limit=str(limit), cursor=cursor, timeout=timeout)
 
     def get_votes(self, domain, limit=10, cursor=None, timeout=None):
         """Retrieve votes for an Internet domain.
@@ -99,7 +104,7 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        return self._get(f'/domains/{domain}/votes', limit=str(limit), cursor=cursor, timeout=timeout)
 
     def add_votes(self, domain, malicious=True, timeout=None):
         """Add a vote for a hostname or domain.
@@ -117,7 +122,7 @@ class VT3Domains(VT3Base):
         """
         verdict = 'malicious' if malicious else 'harmless'
         votes = {"data": {"type": "vote", "attributes": {"verdict": verdict}}}
-        pass
+        return self._post(f'/domains/{domain}/votes', json=votes, timeout=timeout)
 
     def resolution(self, id, timeout=None):
         """Retrieve a resolution object.
@@ -134,4 +139,4 @@ class VT3Domains(VT3Base):
             RequestException: Response timeout from the server is exceeded or server connection error.
             VT3Exception: If the request failed.
         """
-        pass
+        return self._get(f'resolutions/{id}', timeout=timeout)
