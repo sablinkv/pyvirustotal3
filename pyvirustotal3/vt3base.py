@@ -1,7 +1,7 @@
 import requests
 from vt3exception import VT3Exception
 
-class VT3Base():
+class VT3Request():
     """A base class for subclasses VT3Files, VT3Urls, VT3Domains and VT3IPAddresses.
         Attributes:
             url(str): The URL for sending requests.
@@ -37,7 +37,7 @@ class VT3Base():
             response(requests.Response): Request response.
 
         Exception:
-            VT3Exception: If the request fails, this exception is thrown, which contains an error code and an error message.
+            VT3Exception: If the request failed.
         """
         code = response.status_code
         if code != 200:

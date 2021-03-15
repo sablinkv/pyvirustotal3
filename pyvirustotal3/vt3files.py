@@ -2,9 +2,9 @@ import os
 import requests
 
 from vt3exception import VT3Exception
-from vt3base import VT3Base
+from vt3base import VT3Request
 
-class VT3Files(VT3Base):
+class VT3Files(VT3Request):
     """Class for the Files endpoints."""
 
     def __upload_lerge_file(self, files, timeout):
