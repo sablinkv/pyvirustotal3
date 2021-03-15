@@ -123,20 +123,3 @@ class VT3Domains(VT3Request):
         verdict = 'malicious' if malicious else 'harmless'
         votes = {"data": {"type": "vote", "attributes": {"verdict": verdict}}}
         return self._post(f'/domains/{domain}/votes', json=votes, timeout=timeout)
-
-    def resolution(self, id, timeout=None):
-        """Retrieve a resolution object.
-                This endpoint retrieves a Resolution object by its ID. A resolution object ID is made by appending the IP 
-                and the domain it resolves to together.
-        Args:
-            id(str): Resolution object ID.
-            timeout(float, optional): The amount of time per seconds, for the request to wait until the timeout expires.
-        
-        Returns:
-            The response from the server as a json or byte sequence.
-
-        Exceptions:
-            RequestException: Response timeout from the server is exceeded or server connection error.
-            VT3Exception: If the request failed.
-        """
-        return self._get(f'resolutions/{id}', timeout=timeout)
